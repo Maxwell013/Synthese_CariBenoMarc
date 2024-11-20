@@ -1,2 +1,1 @@
-# Sythese_MaxeLouiXavi
- 
+# Projet Synthese
