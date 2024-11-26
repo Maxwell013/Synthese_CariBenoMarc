@@ -1,14 +1,6 @@
 using UnityEngine;
 
-public class FragRock : Rock
+public class FragRock : Enemy
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    
 }
