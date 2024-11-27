@@ -14,14 +14,15 @@ public class Enemy : Entity
     {
         m_rb = GetComponent<Rigidbody2D>();
         // m_speed = GameManager.Instance.GetSomething();
-        m_speed = 100.0f; // tmp
+        m_speed = 300.0f; // tmp
+        m_rb.velocity = transform.rotation * Vector2.up; // tmp
     }
 
     private void Movement()
     {
         // Inital rotation is handeled by the enemy spawner
-        Vector3 direction = transform.rotation * Vector3.up;
+        Vector3 direction = m_rb.velocity.normalized;
 
-        m_rb.AddForce(m_speed * Time.fixedDeltaTime * direction.normalized);
+        m_rb.velocity = m_speed * Time.fixedDeltaTime * direction;
     }
 }
