@@ -8,7 +8,7 @@ public class Player : Entity
 
     [SerializeField] private float _delai = 0.5f;
 
-    [SerializeField] private float m_acceleration;
+    [SerializeField] private float m_speed;
 
     
     private float _cadenceFire = -1; // modifier avec l'animation
@@ -52,12 +52,17 @@ public class Player : Entity
 
         Vector3 direction = new(positionX, positionY, 0f);
 
-        transform.Translate(m_acceleration * Time.fixedDeltaTime * direction.normalized);
+        transform.Translate(m_speed * Time.fixedDeltaTime * direction.normalized);
     }
 
     private void Dash()
     {
        //TODO
+    }
+
+    private void Rotation()
+    {
+
     }
 
 }
