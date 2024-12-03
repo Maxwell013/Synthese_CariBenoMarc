@@ -6,6 +6,8 @@ public class Player : Entity
     [SerializeField] private Vector2 m_initalPosition = default;
     [SerializeField] private float m_speed = default;
     [SerializeField] private float m_fireRate = 0.5f;
+    [SerializeField] private float m_angularSpeed = default;
+
     
     private float m_fireCooldown = -1.0f; // Changer avec animation
     private Rigidbody2D m_rb = default;
@@ -23,6 +25,7 @@ public class Player : Entity
 
     private void Update()
     {
+
         if (Input.GetButton("Fire1") && Time.time > m_fireCooldown)
         {
             Fire();
@@ -34,6 +37,7 @@ public class Player : Entity
      private void FixedUpdate()
     {
         Movement();
+        Rotation();
     }
 
    
@@ -48,7 +52,7 @@ public class Player : Entity
         float positionX = Input.GetAxis("Horizontal");
         float positionY = Input.GetAxis("Vertical");
 
-        Vector3 direction = new(positionX, positionY, 0.0f);
+        Vector2 direction = new(positionX, positionY);
 
         m_rb.velocity = m_speed * Time.fixedDeltaTime * direction.normalized;
     }
@@ -60,7 +64,7 @@ public class Player : Entity
 
     private void Rotation()
     {
-
+        Quaternion target = Quaternion.LookRotation(Vector3.forward, m_rb.velocity);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, m_angularSpeed * Time.fixedDeltaTime);
     }
-
 }
