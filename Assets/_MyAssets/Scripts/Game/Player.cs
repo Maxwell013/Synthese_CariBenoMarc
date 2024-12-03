@@ -1,47 +1,45 @@
-using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 
 public class Player : Entity
 {
-
-    [SerializeField] private float _delai = 0.5f;
-
-    [SerializeField] private float m_speed;
-
+    [Header("Player")]
+    [SerializeField] private Vector2 m_initalPosition = default;
+    [SerializeField] private float m_speed = default;
+    [SerializeField] private float m_fireRate = 0.5f;
     
-    private float _cadenceFire = -1; // modifier avec l'animation
+    private float m_fireCooldown = -1.0f; // Changer avec animation
+    private Rigidbody2D m_rb = default;
 
-
-    private void Start()
-    {
-        transform.position = new Vector3(0f, 0f, 0f); // a modifier pour spawn player
-    }
 
     private void Awake()
     {
-
+        m_rb = GetComponent<Rigidbody2D>();
     }
-
-    private void FixedUpdate()
+    
+    private void Start()
     {
-        Movement();
+        transform.position = m_initalPosition; // a modifier pour spawn player
     }
 
     private void Update()
     {
-        if (Input.GetButton("Fire1") && Time.time > _cadenceFire)
+        if (Input.GetButton("Fire1") && Time.time > m_fireCooldown)
         {
             Fire();
         }
 
-        Dash();
+        // Dash();
     }
-    
+
+     private void FixedUpdate()
+    {
+        Movement();
+    }
+
+   
     private void Fire()
     {
-        _cadenceFire = Time.time + _delai;
+        m_fireCooldown = Time.time + m_fireRate;
         // Instantiate(_laserPrefab, (transform.position + new Vector3(0f, 0.9f, 0f)), Quaternion.identity); // Changer nom prefab en fonction du nom
     }
     
@@ -50,9 +48,9 @@ public class Player : Entity
         float positionX = Input.GetAxis("Horizontal");
         float positionY = Input.GetAxis("Vertical");
 
-        Vector3 direction = new(positionX, positionY, 0f);
+        Vector3 direction = new(positionX, positionY, 0.0f);
 
-        transform.Translate(m_speed * Time.fixedDeltaTime * direction.normalized);
+        m_rb.velocity = m_speed * Time.fixedDeltaTime * direction.normalized;
     }
 
     private void Dash()
