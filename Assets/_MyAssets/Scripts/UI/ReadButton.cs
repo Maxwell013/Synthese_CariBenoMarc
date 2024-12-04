@@ -1,27 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ReadButton : MonoBehaviour
 {
+    [SerializeField] private HighScoreTable m_highScoreTable;
 
-    private Button _button;
-    private HighScoreTable _highScoreTable;
+    private Button m_button;
 
     private void Start()
     {
-        _highScoreTable = FindObjectOfType<HighScoreTable>();
-        _button = this.GetComponent<Button>();
-        _button.onClick.AddListener(LireTexte);
+        m_highScoreTable = FindObjectOfType<HighScoreTable>();
+        m_button = this.GetComponent<Button>();
+        m_button.onClick.AddListener(Read);
     }
 
-    public void LireTexte()
+    public void Read()
     {
-        if (_highScoreTable != null)
+        if (m_highScoreTable != null)
         {
-            _highScoreTable.AjouterLettre(this.GetComponentInChildren<TMP_Text>().text);
+            // m_highScoreTable.AjouterLettre(this.GetComponentInChildren<TMP_Text>().text);
         }
     }
 }
