@@ -7,6 +7,7 @@ public class Player : Entity
     [SerializeField] private float m_speed = default;
     [SerializeField] private float m_fireRate = 0.5f;
     [SerializeField] private float m_angularSpeed = default;
+    [SerializeField] private GameObject m_projectilePrefab = default;
 
 
     private float m_fireCooldown = -1.0f; // Changer avec animation
@@ -16,7 +17,7 @@ public class Player : Entity
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private void Update()
@@ -34,13 +35,14 @@ public class Player : Entity
     {
         Movement();
         Rotation();
+        
     }
 
 
     private void Fire()
     {
         m_fireCooldown = Time.time + m_fireRate;
-        // Instantiate(_laserPrefab, (transform.position + new Vector3(0f, 0.9f, 0f)), Quaternion.identity); // Changer nom prefab en fonction du nom
+        Instantiate(m_projectilePrefab, (transform.position + (Vector3) m_rb.velocity.normalized * 1.5f), transform.rotation); //fix position spawn bullet
     }
 
     private void Movement()
@@ -60,13 +62,17 @@ public class Player : Entity
 
     private void Rotation()
     {
-        Quaternion target = Quaternion.LookRotation(Vector3.forward, m_rb.velocity);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, m_angularSpeed * Time.fixedDeltaTime);
+        // if (m_rb.velocity.magnitude >= 0.1)
+        {
+            Quaternion target = Quaternion.LookRotation(Vector3.forward, m_rb.velocity);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, m_angularSpeed * Time.fixedDeltaTime);
+        }
     }
 
     public void Spawn()
     {
         transform.position = m_initalPosition;
         gameObject.SetActive(false);
+        
     }
 }
