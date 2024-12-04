@@ -37,6 +37,6 @@ public class UIManagerOverlay : MonoBehaviour
 
     public void UpdateHPBar(int p_hp)
     {
-        // TODO
+       m_hpBar.fillAmount = p_hp / 3;
     }
 }
