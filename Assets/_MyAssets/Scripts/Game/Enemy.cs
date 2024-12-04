@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    private Rigidbody2D m_rb;
-    private float m_speed;
+    private Rigidbody2D m_rb = default;
+    private float m_speed = default;
 
     private void FixedUpdate()
     {
@@ -13,8 +13,7 @@ public class Enemy : Entity
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        // m_speed = GameManager.Instance.GetSomething();
-        m_speed = 300.0f; // tmp
+        m_speed = GameManager.Instance.GetEnemySpeed();
         m_rb.velocity = transform.rotation * Vector2.up; // tmp
     }
 
