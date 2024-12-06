@@ -5,7 +5,7 @@ public class Entity : MonoBehaviour
 {
     [Header("Entity")]
     [SerializeField] private int m_hp = 1;
-    [SerializeField] private bool m_isInvincable = false;
+    [SerializeField] private bool m_isInvincible = false;
 
     private float m_maxX = 12.0f;
     private float m_maxY = 9.0f;
@@ -21,7 +21,7 @@ public class Entity : MonoBehaviour
 
     public void Dammage(int p_amount = 1)
     {
-        if (!m_isInvincable)
+        if (!m_isInvincible)
             m_hp -= p_amount;
 
         if (m_hp <= 0)

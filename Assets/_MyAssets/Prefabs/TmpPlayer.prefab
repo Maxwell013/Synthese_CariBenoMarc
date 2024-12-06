@@ -148,7 +148,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &4147109295015379919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,4 +165,8 @@ MonoBehaviour:
   m_isInvincable: 0
   m_initalPosition: {x: 0, y: 0}
   m_speed: 400
+  m_angularSpeed: 200
+  m_dashSpeed: 1200
+  m_dashDuration: 0.2
   m_fireRate: 0.5
+  m_dashRate: 0.5
