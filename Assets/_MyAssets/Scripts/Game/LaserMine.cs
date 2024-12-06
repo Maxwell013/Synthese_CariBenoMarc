@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class LaserMine : Enemy
@@ -11,21 +12,26 @@ public class LaserMine : Enemy
 
     private float m_laserCooldown;
 
+    private const float m_maxX = 9.0f;
+    private const float m_maxY = 5.0f;
+
     new protected void Awake()
     {
         base.Awake();
 
-        m_laserCooldown = Time.time + 2.0f * m_laserRate;
+        m_laserCooldown = Time.time + 1.5f * m_laserRate;
 
         foreach (GameObject group in m_lasers)
             group.SetActive(false);
 
-        GetComponent<Rigidbody2D>().angularVelocity = 10.0f;
+        GetComponent<Rigidbody2D>().angularVelocity = 20.0f;
     }
 
     private void Update()
     {
-        if (Time.time > m_laserCooldown)
+        float x = transform.position.x;
+        float y = transform.position.y;
+        if (Time.time > m_laserCooldown && MathF.Abs(x) <= m_maxX && MathF.Abs(y) <= m_maxY)
             FireLasers();
     }
 
@@ -37,7 +43,7 @@ public class LaserMine : Enemy
 
     private IEnumerator LaserCoroutine()
     {
-        int index = Random.Range(0, m_lasers.Count);
+        int index = UnityEngine.Random.Range(0, m_lasers.Count);
 
         m_lasers[index].gameObject.SetActive(true);
 

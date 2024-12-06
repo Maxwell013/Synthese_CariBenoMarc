@@ -7,8 +7,8 @@ public class Entity : MonoBehaviour
     [SerializeField] private int m_hp = 1;
     [SerializeField] private bool m_isInvincable = false;
 
-    private float m_maxX = 12.0f;
-    private float m_maxY = 9.0f;
+    private const float m_maxX = 12.0f;
+    private const float m_maxY = 9.0f;
 
     private void Update()
     {
