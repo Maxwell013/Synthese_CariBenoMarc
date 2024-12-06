@@ -15,7 +15,7 @@ public class Player : Entity
     [SerializeField] private float m_fireRate = default;
     [SerializeField] private float m_dashRate = default;
     [SerializeField] private float m_burstFireCount = default;
-    [SerializeField] private GameObject m_tmp = default;
+    [SerializeField] private GameObject m_projectilePrefab = default;
 
 
     private float m_fireCooldown = -1.0f; // Changer avec animation
@@ -28,11 +28,8 @@ public class Player : Entity
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
-    }
-    
-    private void Start()
-    {
-        transform.position = m_initalPosition; // a modifier pour spawn player
+        //gameObject.SetActive(false);
+        Spawn(); // tmp
     }
 
     private void Update()
@@ -49,19 +46,20 @@ public class Player : Entity
         
     }
 
-     private void FixedUpdate()
+    private void FixedUpdate()
     {
         Movement();
         Rotation();
+        
     }
 
-   
+
     private void Fire()
     {
         m_fireCooldown = Time.time + m_fireRate;
-        // Instantiate(_laserPrefab, (transform.position + new Vector3(0f, 0.9f, 0f)), Quaternion.identity); // Changer nom prefab en fonction du nom
+        Instantiate(m_projectilePrefab, (transform.position + (Vector3) m_rb.velocity.normalized * 1.5f), transform.rotation); //fix position spawn bullet
     }
-    
+
     private void Movement()
     {
 
@@ -98,7 +96,6 @@ public class Player : Entity
             Quaternion target = Quaternion.LookRotation(Vector3.forward, m_rb.velocity);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, m_angularSpeed * Time.fixedDeltaTime);
         }
-        
     }
 
     public IEnumerator DashCoroutine()
@@ -123,5 +120,12 @@ public class Player : Entity
 
             Instantiate(m_tmp, transform.position + rotation * Vector2.up, rotation);
         }
+
+    }
+
+    public void Spawn()
+    {
+        transform.position = m_initalPosition;
+        gameObject.SetActive(false);
     }
 }

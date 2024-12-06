@@ -2,13 +2,8 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    void Start()
+    private void OnTriggerEnter2D(Collider2D p_collision)
     {
-        
-    }
-
-    void Update()
-    {
-        
+        GetComponent<SpriteRenderer>().color = new(255, 0, 0);
     }
 }
