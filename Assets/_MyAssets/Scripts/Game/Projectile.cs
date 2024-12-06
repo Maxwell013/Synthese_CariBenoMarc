@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Projectile : Entity
 {
@@ -6,16 +7,15 @@ public class Projectile : Entity
     [SerializeField] private float m_speed;
     
     private Rigidbody2D m_rb;
+    protected void Awake()
+    {
+        m_rb = GetComponent<Rigidbody2D>();
+        m_rb.velocity = transform.rotation * Vector2.up; // tmp
+    }
 
     private void FixedUpdate()
     {
         Movement();
-    }
-
-    private void Awake()
-    {
-        m_rb = GetComponent<Rigidbody2D>();
-        m_rb.velocity = transform.rotation * Vector2.up; // tmp
     }
 
     private void Movement()

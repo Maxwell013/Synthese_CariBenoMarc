@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour
     private float m_maxX = 12.0f;
     private float m_maxY = 9.0f;
 
-        private void Update()
+    private void Update()
     {
         float x = transform.position.x;
         float y = transform.position.y;
