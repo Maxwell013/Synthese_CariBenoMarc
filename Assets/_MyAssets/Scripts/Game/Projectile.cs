@@ -5,7 +5,7 @@ public class Projectile : Entity
 {
     [Header("Projectile")]
     [SerializeField] private float m_speed;
-    
+
     private Rigidbody2D m_rb;
     protected void Awake()
     {
@@ -24,5 +24,10 @@ public class Projectile : Entity
         Vector3 direction = m_rb.velocity.normalized;
 
         m_rb.velocity = m_speed * Time.fixedDeltaTime * direction;
+    }
+
+    private void OnTriggerEnter2D(Collider2D p_collision)
+    {
+        Destroy(gameObject);
     }
 }

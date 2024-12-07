@@ -24,7 +24,7 @@ public class Entity : MonoBehaviour
         if (!m_isInvincible)
             m_hp -= p_amount;
 
-        if (m_hp <= 0)
+        if (m_hp <= 0);
             Destroy(gameObject);
     }
 
@@ -32,4 +32,6 @@ public class Entity : MonoBehaviour
     {
         // GameManager.Instance.DoSomething(); // increment point
     }
+
+    
 }

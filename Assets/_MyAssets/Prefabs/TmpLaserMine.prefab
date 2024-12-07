@@ -404,11 +404,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hp: 1
-  m_isInvincable: 0
+  m_isInvincible: 0
+  m_specialEnemyBurst: 1
+  m_specialEnemyBurst: 1
   m_lasers:
   - {fileID: 1194813911632580877}
   m_laserRate: 8
   m_laserDuration: 5
+  m_specialEnemyBurst: 0
 --- !u!1 &4460911465970465612
 GameObject:
   m_ObjectHideFlags: 0

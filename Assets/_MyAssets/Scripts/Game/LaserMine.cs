@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Unity.Burst;
 
 public class LaserMine : Enemy
 {
@@ -51,4 +52,17 @@ public class LaserMine : Enemy
 
         m_lasers[index].gameObject.SetActive(false);
     }
+
+    private void OnTriggerEnter2D(Collider2D p_collision)
+    {
+        Dammage();
+    }
+
+    public Player player;
+        private void OnDestroy()
+        {
+            player.CanBurst();
+        }
+
+
 }

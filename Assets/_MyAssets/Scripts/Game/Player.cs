@@ -18,17 +18,21 @@ public class Player : Entity
     [SerializeField] private GameObject m_projectilePrefab = default;
 
 
-    private float m_fireCooldown = -1.0f; // Changer avec animation
+    private float m_fireCooldown = -0.4f; // Changer avec animation
     private float m_dashCooldown = -1.0f; // Changer avec animation
     private Rigidbody2D m_rb = default;
     private bool m_isDashing = false;
-    private bool m_canBurst = true;
+    private bool m_canBurst = false;
 
 
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        //gameObject.SetActive(false);
+        gameObject.SetActive(true);
+    }
+
+    private void Start()
+    {
         Spawn(); // tmp
     }
 
@@ -57,7 +61,7 @@ public class Player : Entity
     private void Fire()
     {
         m_fireCooldown = Time.time + m_fireRate;
-        Instantiate(m_projectilePrefab, (transform.position + (Vector3) m_rb.velocity.normalized * 1.5f), transform.rotation); //fix position spawn bullet
+        Instantiate(m_projectilePrefab, (transform.position + (Vector3) transform.up * 0.7f), transform.rotation); //fix position spawn bullet
     }
 
     private void Movement()
@@ -107,9 +111,14 @@ public class Player : Entity
         m_isDashing = false;
     }
 
+    public void CanBurst()
+    {
+        m_canBurst = true;
+    }
+
     private void Burst()
     {
-        m_canBurst = false; 
+        m_canBurst = false;
         m_fireCooldown = Time.time + m_fireRate;
 
         float gap = 360.0f / m_burstFireCount;
@@ -118,7 +127,7 @@ public class Player : Entity
         {
             Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, angle);
 
-            Instantiate(m_tmp, transform.position + rotation * Vector2.up, rotation);
+            Instantiate(m_projectilePrefab, transform.position + rotation * Vector2.up, rotation);
         }
 
     }
@@ -126,6 +135,6 @@ public class Player : Entity
     public void Spawn()
     {
         transform.position = m_initalPosition;
-        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 }
