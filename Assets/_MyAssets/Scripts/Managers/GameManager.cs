@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private float m_startTime;
     private int m_points;
+    private bool m_isMuted = false;
 
     public static GameManager Instance = default;
 
@@ -27,7 +28,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Game"));
+        SceneManager.LoadScene("Game");
+        StartCoroutine(PlayerSpawnCoroutine());
         m_startTime = Time.time;
         m_points = 0;
     }
@@ -37,7 +39,11 @@ public class GameManager : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("End"));
     }
 
+    // Set functions
+    public void SetMuted(bool p_state) { m_isMuted = p_state; }
+
     // Get functions
+    public bool IsMuted() { return m_isMuted; }
     public float GetTime() { return Time.time - m_startTime; }
     public float GetPoints() { return m_points; }
     public float GetEnemySpeed() { return m_initalEnemySpeed + m_enemySpeedScale * GetTime(); }

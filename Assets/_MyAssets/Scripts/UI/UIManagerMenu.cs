@@ -15,26 +15,36 @@ public class UIManagerMenu : MonoBehaviour
 
     [Header("UIManagerMenu")]
     [SerializeField] private MenuType m_type = MenuType.MainMenu;
+    [SerializeField] private Image m_muteImage = default;
+    [SerializeField] private Sprite m_muteActiveSprite = default;
+    [SerializeField] private Sprite m_muteInactiveSprite = default;
+    [SerializeField] private Animator m_quitAnimator = default;
+    [SerializeField] private GameObject m_quitLabel = default;
 
     [Header("End Menu")]
+
     [SerializeField] private TextMeshProUGUI m_finalScoreText = default;
     [SerializeField] private Button m_mainMenuButton = default;
-    [SerializeField] private Button m_quitButton = default;
 
     [Header("Main Menu")]
+    [SerializeField] private Animator m_startAnimator = default;
+    [SerializeField] private GameObject m_startLabel = default;
+
     [SerializeField] private GameObject m_startPanel = default;
     [SerializeField] private GameObject m_bestScoresPanel = default;
-    [SerializeField] private GameObject m_startButton = default;
     [SerializeField] private GameObject m_returnButton = default;
     [SerializeField] private TMP_Text m_gamesPlayeddText = default;
 
-
     private void Start()
     {
+        m_muteImage.sprite = m_muteInactiveSprite;
+        m_quitLabel.SetActive(true);
+        m_startLabel.SetActive(true);
+
         if (m_type == MenuType.MainMenu)
         {
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(m_startButton);
+            EventSystem.current.SetSelectedGameObject(m_startLabel.GetComponentInParent<GameObject>());
 
             if (PlayerPrefs.HasKey("GamesPlayed"))
             {
@@ -49,15 +59,37 @@ public class UIManagerMenu : MonoBehaviour
         if (m_type == MenuType.EndMenu)
         {
             m_mainMenuButton.onClick.AddListener(OnMainMenuClick);
-            m_quitButton.onClick.AddListener(OnQuitClick);
             m_finalScoreText.text = "Votre pointage : "; //  + GameManager.Instance.Score.ToString();
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(m_mainMenuButton.gameObject);
+        }
+
+    }
+
+    public void OnMuteClick()
+    {
+        if (GameManager.Instance.IsMuted())
+        {
+            m_muteImage.sprite = m_muteInactiveSprite;
+            GameManager.Instance.SetMuted(false);
+        } else
+        {
+            m_muteImage.sprite = m_muteActiveSprite;
+            GameManager.Instance.SetMuted(true);
         }
     }
 
     public void OnQuitClick()
     {
+        m_quitLabel.SetActive(false);
+        m_quitAnimator.Play("Ship_anim");
+        StartCoroutine(QuitAfterAnimationCoroutine());
+    }
+
+    private IEnumerator QuitAfterAnimationCoroutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
@@ -68,6 +100,9 @@ public class UIManagerMenu : MonoBehaviour
 
     public void OnStartClick()
     {
+        m_startLabel.SetActive(false);
+        m_startAnimator.Play("Ship_anim");
+
         if (PlayerPrefs.HasKey("GamesPlayed"))
         {
             PlayerPrefs.SetInt("GamesPlayed", PlayerPrefs.GetInt("GamesPlayed") + 1);
@@ -76,7 +111,15 @@ public class UIManagerMenu : MonoBehaviour
         {
             PlayerPrefs.SetInt("GamesPlayed", 1);
         }
-        // GameManager.Instance.StartGame();
+
+        StartCoroutine(StartAfterAnimationCoroutine());
+    }
+
+    private IEnumerator StartAfterAnimationCoroutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        GameManager.Instance.StartGame();
     }
 
     public void OnBestScoresClick()
