@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float m_initalEnemySpeed = default;
     [SerializeField] private float m_enemySpeedScale = default;
 
-    private float m_startTime;
-    private int m_points;
+    private float m_startTime = default ;
+    private int m_points = default;
+    private float m_time = default;
+    private int m_kills = default;
 
     public static GameManager Instance = default;
 
@@ -47,4 +50,17 @@ public class GameManager : MonoBehaviour
     {
         yield return null;
     }
+
+    
+    public void Score()
+    {
+        m_points = (int)GetTime() + (m_kills * 10);
+        
+    }
+
+    public void AddKills()
+    {
+        m_kills++;
+    }
+
 }

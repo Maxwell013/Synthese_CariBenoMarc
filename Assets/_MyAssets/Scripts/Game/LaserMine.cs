@@ -58,11 +58,10 @@ public class LaserMine : Enemy
         Dammage();
     }
 
-    public Player player;
-        private void OnDestroy()
-        {
-            player.CanBurst();
-        }
+    private void OnDestroy()
+    {
+         Player.Instance.CanBurst();
+    }
 
 
 }

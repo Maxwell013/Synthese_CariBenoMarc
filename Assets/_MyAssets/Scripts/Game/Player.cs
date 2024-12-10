@@ -24,7 +24,7 @@ public class Player : Entity
     private bool m_isDashing = false;
     private bool m_canBurst = false;
 
-
+    public static Player Instance = default;
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
