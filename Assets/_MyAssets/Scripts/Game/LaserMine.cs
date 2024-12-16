@@ -9,6 +9,7 @@ public class LaserMine : Enemy
     [SerializeField] private List<GameObject> m_lasers = default; // List of laser groups
     [SerializeField] private float m_laserRate = default;
     [SerializeField] private float m_laserDuration = default;
+    [SerializeField] private Animator m_bombAnim= default;
 
     private float m_laserCooldown;
 
@@ -32,7 +33,7 @@ public class LaserMine : Enemy
         float x = transform.position.x;
         float y = transform.position.y;
         if (Time.time > m_laserCooldown && MathF.Abs(x) <= m_maxX && MathF.Abs(y) <= m_maxY)
-            FireLasers();
+             FireLasers();
     }
 
     private void FireLasers()
@@ -44,7 +45,7 @@ public class LaserMine : Enemy
     private IEnumerator LaserCoroutine()
     {
         int index = UnityEngine.Random.Range(0, m_lasers.Count);
-
+       
         m_lasers[index].gameObject.SetActive(true);
 
         yield return new WaitForSeconds(m_laserDuration);
