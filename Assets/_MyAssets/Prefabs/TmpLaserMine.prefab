@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1053417157412708520}
   m_Layer: 0
-  m_Name: LaserGroup1
+  m_Name: Lasers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1053417157412708520
 Transform:
   m_ObjectHideFlags: 0
@@ -46,8 +46,9 @@ GameObject:
   - component: {fileID: 5088741626468889536}
   - component: {fileID: 279445594843403673}
   - component: {fileID: 418744096821955547}
-  - component: {fileID: 6149812818379936654}
   - component: {fileID: 3476589762535323489}
+  - component: {fileID: 5839399992343086683}
+  - component: {fileID: 4727240797115675770}
   m_Layer: 0
   m_Name: TmpLaserMine
   m_TagString: Untagged
@@ -63,13 +64,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988380855834003161}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.63, y: 2.32, z: 0}
+  m_LocalPosition: {x: 6.77, y: 2.4, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1053417157412708520}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &279445594843403673
 SpriteRenderer:
@@ -364,33 +365,6 @@ PolygonCollider2D:
       - {x: 0.235, y: -5.495}
       - {x: 0.435, y: -5.475}
   m_UseDelaunayMesh: 0
---- !u!50 &6149812818379936654
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988380855834003161}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 10
-  m_LinearDrag: 0
-  m_AngularDrag: 0.2
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 1
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!114 &3476589762535323489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,10 +379,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hp: 1
   m_isInvincable: 0
-  m_lasers:
-  - {fileID: 1194813911632580877}
-  m_laserRate: 8
+  m_lasers: {fileID: 1194813911632580877}
+  m_laserRate: 9
   m_laserDuration: 5
+  m_defaultSprite: {fileID: 21300000, guid: 92ac2347ef9c83948bc64210551aa99d, type: 3}
+--- !u!95 &5839399992343086683
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988380855834003161}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4b44e58bf5e8b74ab3cbfd7f091e0f9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!50 &4727240797115675770
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988380855834003161}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1000
+  m_LinearDrag: 0
+  m_AngularDrag: 1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &4460911465970465612
 GameObject:
   m_ObjectHideFlags: 0
