@@ -39,7 +39,9 @@ public class GameManager : MonoBehaviour
 
     // Get functions
     public float GetTime() { return Time.time - m_startTime; }
-    public float GetPoints() { return m_points; }
+
+    public int GetPoints() { return m_points; }
+
     public float GetEnemySpeed() { return m_initalEnemySpeed + m_enemySpeedScale * GetTime(); }
 
     // Coroutines

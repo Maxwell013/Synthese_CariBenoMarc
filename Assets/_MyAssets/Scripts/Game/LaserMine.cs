@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaserMine : Enemy
 {
     [Header("LaserMine")]
+    [SerializeField] private bool m_isLarge = default;
     [SerializeField] private GameObject m_lasers = default;
     [SerializeField] private float m_laserRate = default;
     [SerializeField] private float m_laserDuration = default;
@@ -19,9 +20,6 @@ public class LaserMine : Enemy
 
     private void Awake()
     {
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        rb.velocity = transform.rotation * Vector2.left;
-
         m_animator = GetComponent<Animator>();
 
         if (m_laserRate <= m_laserDuration + 1.3f)
@@ -34,8 +32,9 @@ public class LaserMine : Enemy
         GetComponent<Rigidbody2D>().angularVelocity = 20.0f;
     }
 
-    private void Update()
+    new protected void Update()
     {
+        base.Update();
         float x = transform.position.x;
         float y = transform.position.y;
         if (Time.time > m_laserCooldown && MathF.Abs(x) <= m_maxX && MathF.Abs(y) <= m_maxY)
@@ -51,7 +50,9 @@ public class LaserMine : Enemy
     private IEnumerator LaserCoroutine()
     {
         m_animator.enabled = true;
-        m_animator.Play("MineShoot", -1, 0.0f);
+
+        String animName = (m_isLarge) ? "LaserMineLarge_anim" : "LaserMineSmall_anim";
+        m_animator.Play(animName, -1, 0.0f);
 
         yield return new WaitForSeconds(1.3f);
 

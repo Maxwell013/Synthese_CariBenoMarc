@@ -13,12 +13,10 @@ public class FragRock : Enemy
 
     private void OnDestroy()
     {
-        foreach (GameObject fragment in m_fragments)
-        {
-            Vector3 position = new(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0.0f); // tmp
-            Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)); // tmp
+        Quaternion r = transform.rotation;
 
-            Instantiate(fragment, position + transform.position, rotation);
-        }
+        Instantiate(m_fragments[0], transform.position + r * new Vector3(-0.5f, -0.5f, 0.0f), r);
+        Instantiate(m_fragments[1], transform.position + r * new Vector3( 0.5f, -0.5f, 0.0f), r);
+        Instantiate(m_fragments[2], transform.position + r * new Vector3(-0.4f,  0.5f, 0.0f), r);
     }
 }

@@ -10,13 +10,14 @@ public class Entity : MonoBehaviour
     private const float m_maxX = 12.0f;
     private const float m_maxY = 9.0f;
 
-    private void Update()
+    protected void Update()
     {
         float x = transform.position.x;
         float y = transform.position.y;
 
         if (MathF.Abs(x) >= m_maxX || MathF.Abs(y) >= m_maxY)
             Destroy(gameObject);
+
     }
 
     public void Dammage(int p_amount = 1)
@@ -32,4 +33,16 @@ public class Entity : MonoBehaviour
     {
         // GameManager.Instance.DoSomething(); // increment point
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if (collision.gameObject.CompareTag("Enemy"))
+            //Dammage();
+    }
+    /*
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Dammage();
+    }
+    */
 }
