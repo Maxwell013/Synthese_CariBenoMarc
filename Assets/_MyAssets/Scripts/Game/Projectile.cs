@@ -9,10 +9,12 @@ public class Projectile : Entity
 
     private Rigidbody2D m_rb = default;
     private Animator m_animator = default;
+
     protected void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
+
         m_rb.velocity = transform.rotation * Vector2.up; // tmp
         m_animator.Play("BulletMove_anim");
     }
@@ -26,16 +28,19 @@ public class Projectile : Entity
 
     private void Movement()
     {
-        // Inital rotation is handeled by the enemy spawner
         Vector3 direction = m_rb.velocity.normalized;
 
         m_rb.velocity = m_speed * Time.fixedDeltaTime * direction;
     }
+
     private void Rotation()
     {
-        {
-            Quaternion target = Quaternion.LookRotation(Vector3.forward, m_rb.velocity);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, m_angularSpeed * Time.fixedDeltaTime);
-        }
+        Quaternion target = Quaternion.LookRotation(Vector3.forward, m_rb.velocity);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, m_angularSpeed * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D p_collision)
+    {
+        Destroy(gameObject);
     }
 }

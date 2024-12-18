@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Game");
 
         // Wait for scene to load
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
 
         m_player = GameObject.Find("Player");
         m_startAnimator = GameObject.Find("StartAnimation");

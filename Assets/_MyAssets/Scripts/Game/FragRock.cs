@@ -6,7 +6,7 @@ public class FragRock : Enemy
     [Header("Frag Rock")]
     [SerializeField] private List<GameObject> m_fragments = default;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D p_collision)
     {
         Dammage();
     }

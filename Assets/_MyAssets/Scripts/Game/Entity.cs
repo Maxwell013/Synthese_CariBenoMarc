@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Entity : MonoBehaviour
 {
     [Header("Entity")]
     [SerializeField] private int m_hp = 1;
-    [SerializeField] private bool m_isInvincable = false;
+    [SerializeField] private bool m_isInvincible = false;
+
+    private int m_kills = 0;
 
     private const float m_maxX = 12.0f;
     private const float m_maxY = 9.0f;
@@ -22,10 +25,11 @@ public class Entity : MonoBehaviour
 
     public void Dammage(int p_amount = 1)
     {
-        if (!m_isInvincable)
+        if (!m_isInvincible)
             m_hp -= p_amount;
 
         if (m_hp <= 0)
+            Kills();
             Destroy(gameObject);
     }
 
@@ -36,13 +40,6 @@ public class Entity : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if (collision.gameObject.CompareTag("Enemy"))
-            //Dammage();
+        // TODO
     }
-    /*
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Dammage();
-    }
-    */
 }

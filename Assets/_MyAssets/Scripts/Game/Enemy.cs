@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Enemy : Entity
@@ -20,4 +21,13 @@ public class Enemy : Entity
         Vector3 direction = m_rb.velocity.normalized;
         m_rb.velocity = GameManager.Instance.GetEnemySpeed() * Time.fixedDeltaTime * direction;
     }
+
+    private void OnTriggerEnter2D(Collider2D p_collision)
+    {
+        Dammage();
+        Destroy(p_collision);
+    }
+    
+
+
 }

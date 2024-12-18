@@ -140,16 +140,16 @@ public class HighScoreTable : MonoBehaviour
 
         // Utilise seulement pour les tests on enlève les commentaires pour générer
         // manuellement 10 entrées dans la table des highscores
-        //AddHighScoreEntry(14500, "Dave");
-        //AddHighScoreEntry(3400, "Alex");
-        //AddHighScoreEntry(700, "Josée");
-        //AddHighScoreEntry(5500, "Maxime");
-        //AddHighScoreEntry(7800, "David");
-        //AddHighScoreEntry(1800, "Shany");
-        //AddHighScoreEntry(100, "François");
-        //AddHighScoreEntry(2800, "Fabrice");
-        //AddHighScoreEntry(5400, "Jonathan");
-        //AddHighScoreEntry(5400, "Line");
+        AddHighScoreEntry(14500, "Dave");
+        AddHighScoreEntry(3400, "Alex");
+        AddHighScoreEntry(700, "Josée");
+        AddHighScoreEntry(5500, "Maxime");
+        AddHighScoreEntry(7800, "David");
+        AddHighScoreEntry(1800, "Shany");
+        AddHighScoreEntry(100, "François");
+        AddHighScoreEntry(2800, "Fabrice");
+        AddHighScoreEntry(5400, "Jonathan");
+        AddHighScoreEntry(5400, "Line");
 
         // Récupère la liste des highscores dans une liste à partir du PlayerPrefs
         // Cette liste est stocké à l'aide de JSON sous forme de chaine de caractère

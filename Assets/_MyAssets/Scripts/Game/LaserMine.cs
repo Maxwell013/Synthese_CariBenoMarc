@@ -1,6 +1,8 @@
 using System.Collections;
 using System;
 using UnityEngine;
+using Unity.Burst;
+using Unity.VisualScripting;
 
 public class LaserMine : Enemy
 {
@@ -65,4 +67,18 @@ public class LaserMine : Enemy
 
         m_lasers.gameObject.SetActive(false);
     }
+
+    private void OnTriggerEnter2D(Collider2D p_collision)
+    {
+        Dammage();
+    }
+
+    Player player;
+    private void OnDestroy()
+    {
+        Debug.Log("détruit)");
+        GameObject.Find("Player").GetComponent<Player>().CanBurst();
+    }
+
+
 }
