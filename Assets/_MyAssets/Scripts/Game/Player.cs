@@ -11,13 +11,13 @@ public class Player : Entity
 
 
     private float m_fireCooldown = -1.0f; // Changer avec animation
+    private bool m_enabled = false;
     private Rigidbody2D m_rb = default;
 
 
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        //gameObject.SetActive(false);
     }
 
     private void Update()
@@ -33,9 +33,11 @@ public class Player : Entity
 
     private void FixedUpdate()
     {
-        Movement();
-        Rotation();
-        
+        if (m_enabled)
+        {
+            Movement();
+            Rotation();
+        }
     }
 
 
@@ -75,4 +77,7 @@ public class Player : Entity
         gameObject.SetActive(false);
         
     }
+
+    // Set methods
+    public void Enable() { m_enabled = true; }
 }

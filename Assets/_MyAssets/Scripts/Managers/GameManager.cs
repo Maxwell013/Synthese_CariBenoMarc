@@ -8,9 +8,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float m_initalEnemySpeed = default;
     [SerializeField] private float m_enemySpeedScale = default;
 
-    private float m_startTime;
-    private int m_points;
+    private float m_startTime = default;
+    private int m_points = default;
     private bool m_isMuted = false;
+
+    private GameObject m_startAnimator = default;
+    private GameObject m_player = default;
 
     public static GameManager Instance = default;
 
@@ -29,6 +32,19 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Game");
+        m_player = GameObject.Find("Player");
+        m_startAnimator = GameObject.Find("StartAnimation");
+
+        Debug.Log("got stuff");
+
+        m_player.SetActive(false);
+
+        m_startAnimator.gameObject.SetActive(true);
+        Animator animator = m_startAnimator.GetComponent<Animator>();
+        animator.enabled = true;
+        animator.Play("Start_anim");
+
+        Debug.Log("started animation");
         StartCoroutine(PlayerSpawnCoroutine());
         m_startTime = Time.time;
         m_points = 0;
@@ -39,18 +55,29 @@ public class GameManager : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("End"));
     }
 
-    // Set functions
+    // Set methods
     public void SetMuted(bool p_state) { m_isMuted = p_state; }
 
-    // Get functions
+    // Get methods
     public bool IsMuted() { return m_isMuted; }
+
     public float GetTime() { return Time.time - m_startTime; }
+
     public float GetPoints() { return m_points; }
+    
     public float GetEnemySpeed() { return m_initalEnemySpeed + m_enemySpeedScale * GetTime(); }
 
     // Coroutines
     IEnumerator PlayerSpawnCoroutine()
     {
-        yield return null;
+        Debug.Log("dslkag");
+
+        yield return new WaitForSeconds(1.5f);
+
+        m_player.SetActive(true);
+        m_player.GetComponent<Player>().Enable();
+
+        m_startAnimator.GetComponent<Animator>().enabled = false;
+        m_startAnimator.SetActive(false);
     }
 }

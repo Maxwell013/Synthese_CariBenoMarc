@@ -1,50 +1,94 @@
-using UnityEngine;
-using TMPro;
-using UnityEditor;
 using System.Collections;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class UIManagerMenu : MonoBehaviour
 {
-    enum MenuType
-    {
-        MainMenu,
-        EndMenu
-    }
+    enum MenuType { MainMenu, EndMenu }
 
     [Header("UIManagerMenu")]
     [SerializeField] private MenuType m_type = MenuType.MainMenu;
-    [SerializeField] private Image m_muteImage = default;
+    [SerializeField] private GameObject m_buttonPanel = default;
+    [SerializeField] private GameObject m_muteButton = default;
     [SerializeField] private Sprite m_muteActiveSprite = default;
     [SerializeField] private Sprite m_muteInactiveSprite = default;
-    [SerializeField] private Animator m_quitAnimator = default;
-    [SerializeField] private GameObject m_quitLabel = default;
+    [SerializeField] private Sprite m_shipButtonSprite = default;
+    [SerializeField] private GameObject m_quitButton = default;
+    [SerializeField] private GameObject m_returnButton = default;
+
+    [Header("Main Menu")]
+    [SerializeField] private GameObject m_startButton = default;
+    [SerializeField] private GameObject m_infoButton = default;
+    [SerializeField] private GameObject m_infoPanel = default;
+
+    [SerializeField] private GameObject m_bestScoresPanel = default;
+    [SerializeField] private TMP_Text m_gamesPlayeddText = default;
 
     [Header("End Menu")]
 
     [SerializeField] private TextMeshProUGUI m_finalScoreText = default;
     [SerializeField] private Button m_mainMenuButton = default;
 
-    [Header("Main Menu")]
-    [SerializeField] private Animator m_startAnimator = default;
-    [SerializeField] private GameObject m_startLabel = default;
+    private Image m_muteImage = default;
 
-    [SerializeField] private GameObject m_startPanel = default;
-    [SerializeField] private GameObject m_bestScoresPanel = default;
-    [SerializeField] private GameObject m_returnButton = default;
-    [SerializeField] private TMP_Text m_gamesPlayeddText = default;
+    private void Awake() // Get children components to reduce serialize fields
+    {
+        m_muteImage = m_muteButton.transform.Find("Image").GetComponent<Image>();
+        AddListener(m_muteButton, OnMuteClick);
+        AddListener(m_quitButton, OnQuitClick);
+
+        if (m_type == MenuType.MainMenu)
+        {
+            AddListener(m_startButton, OnStartClick);
+            AddListener(m_infoButton, OnInfoClick);
+            AddListener(m_returnButton, OnInfoReturnClick);
+
+        } else if (m_type == MenuType.EndMenu)
+        {
+            //todo 
+        }
+
+    }
+
+    private void ResetButton(GameObject p_button)
+    {
+        p_button.transform.Find("Label").gameObject.SetActive(true);
+        p_button.transform.Find("Image").GetComponent<Animator>().enabled = false;
+        p_button.transform.Find("Image").GetComponent<Image>().sprite = m_shipButtonSprite;
+    }
+
+    static private void StartAnimation(GameObject p_button)
+    {
+        p_button.transform.Find("Label").gameObject.SetActive(false);
+        p_button.transform.Find("Image").GetComponent<Animator>().enabled = true;
+        p_button.transform.Find("Image").GetComponent<Animator>().Play("Ship_anim");
+    }
+
+    static private void SetSelectedButton(GameObject p_button)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(p_button.gameObject);
+    }
+
+    static private void AddListener(GameObject p_button, UnityEngine.Events.UnityAction p_callback)
+    {
+        p_button.GetComponent<Button>().onClick.AddListener(p_callback);
+    }
 
     private void Start()
     {
         m_muteImage.sprite = m_muteInactiveSprite;
-        m_quitLabel.SetActive(true);
-        m_startLabel.SetActive(true);
+        ResetButton(m_quitButton);
 
         if (m_type == MenuType.MainMenu)
         {
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(m_startLabel.GetComponentInParent<GameObject>());
+            ResetButton(m_startButton);
+            ResetButton(m_infoButton);
+
+            SetSelectedButton(m_startButton);
 
             if (PlayerPrefs.HasKey("GamesPlayed"))
             {
@@ -81,8 +125,7 @@ public class UIManagerMenu : MonoBehaviour
 
     public void OnQuitClick()
     {
-        m_quitLabel.SetActive(false);
-        m_quitAnimator.Play("Ship_anim");
+        StartAnimation(m_quitButton);
         StartCoroutine(QuitAfterAnimationCoroutine());
     }
 
@@ -100,8 +143,7 @@ public class UIManagerMenu : MonoBehaviour
 
     public void OnStartClick()
     {
-        m_startLabel.SetActive(false);
-        m_startAnimator.Play("Ship_anim");
+        StartAnimation(m_startButton);
 
         if (PlayerPrefs.HasKey("GamesPlayed"))
         {
@@ -122,9 +164,32 @@ public class UIManagerMenu : MonoBehaviour
         GameManager.Instance.StartGame();
     }
 
+    public void OnInfoClick()
+    {
+        StartAnimation(m_infoButton);
+        StartCoroutine(InfoAfterAnimationCoroutine());
+    }
+
+    private IEnumerator InfoAfterAnimationCoroutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        m_buttonPanel.SetActive(false);
+        m_infoPanel.SetActive(true);
+        SetSelectedButton(m_returnButton);
+    }
+
+    public void OnInfoReturnClick()
+    {
+        m_buttonPanel.SetActive(true);
+        m_infoPanel.SetActive(false);
+        SetSelectedButton(m_startButton);
+        ResetButton(m_infoButton);
+    }
+
     public void OnBestScoresClick()
     {
-        m_startPanel.SetActive(false);
+        m_buttonPanel.SetActive(false);
         m_bestScoresPanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_returnButton.gameObject);

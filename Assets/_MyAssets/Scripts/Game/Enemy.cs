@@ -9,7 +9,7 @@ public class Enemy : Entity
     {
         m_rb = GetComponent<Rigidbody2D>();
         m_speed = GameManager.Instance.GetEnemySpeed();
-        m_rb.velocity = transform.rotation * Vector2.left;
+        m_rb.velocity = 2.0f * Vector2.left;
     }
 
     private void FixedUpdate()
