@@ -24,7 +24,7 @@ public class Player : Entity
         m_animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    new protected void Update()
     {
 
         if (Input.GetButton("Fire1") && Time.time > m_fireCooldown)

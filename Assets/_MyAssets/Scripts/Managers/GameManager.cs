@@ -23,31 +23,46 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.LoadScene("Start");
         } else
         {
             Destroy(gameObject);
         }
     }
 
-    public void StartGame()
+    public void StartGame() { StartCoroutine(StartGameCoroutine()); } // Cotoutine is required for scene loading wait
+
+    IEnumerator StartGameCoroutine()
     {
         SceneManager.LoadScene("Game");
+
+        // Wait for scene to load
+        yield return new WaitForSeconds(0.3f);
+
         m_player = GameObject.Find("Player");
         m_startAnimator = GameObject.Find("StartAnimation");
 
-        Debug.Log("got stuff");
+        Animator animator = m_startAnimator.GetComponent<Animator>();
 
         m_player.SetActive(false);
+        m_startAnimator.SetActive(true);
 
-        m_startAnimator.gameObject.SetActive(true);
-        Animator animator = m_startAnimator.GetComponent<Animator>();
         animator.enabled = true;
         animator.Play("Start_anim");
 
-        Debug.Log("started animation");
-        StartCoroutine(PlayerSpawnCoroutine());
+        // Wait for animation end
+        yield return new WaitForSeconds(1.0f);
+
+        m_player.SetActive(true);
+        m_startAnimator.SetActive(false);
+        animator.enabled = false;
+
+        // Start player input
+        m_player.GetComponent<Player>().Enable();
         m_startTime = Time.time;
         m_points = 0;
+
+        yield return null;
     }
 
     public void EndGame()
@@ -66,18 +81,4 @@ public class GameManager : MonoBehaviour
     public int GetPoints() { return m_points; }
 
     public float GetEnemySpeed() { return m_initalEnemySpeed + m_enemySpeedScale * GetTime(); }
-
-    // Coroutines
-    IEnumerator PlayerSpawnCoroutine()
-    {
-        Debug.Log("dslkag");
-
-        yield return new WaitForSeconds(1.5f);
-
-        m_player.SetActive(true);
-        m_player.GetComponent<Player>().Enable();
-
-        m_startAnimator.GetComponent<Animator>().enabled = false;
-        m_startAnimator.SetActive(false);
-    }
 }

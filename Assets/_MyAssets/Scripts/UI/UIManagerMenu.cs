@@ -131,7 +131,7 @@ public class UIManagerMenu : MonoBehaviour
 
     private IEnumerator QuitAfterAnimationCoroutine()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
 
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
@@ -159,7 +159,7 @@ public class UIManagerMenu : MonoBehaviour
 
     private IEnumerator StartAfterAnimationCoroutine()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
 
         GameManager.Instance.StartGame();
     }
@@ -172,7 +172,7 @@ public class UIManagerMenu : MonoBehaviour
 
     private IEnumerator InfoAfterAnimationCoroutine()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
 
         m_buttonPanel.SetActive(false);
         m_infoPanel.SetActive(true);
