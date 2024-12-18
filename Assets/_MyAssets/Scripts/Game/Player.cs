@@ -44,6 +44,7 @@ public class Player : Entity
         }
         if (Input.GetButton("Fire2") && Time.time > m_dashCooldown)
         {
+            m_animator.SetTrigger("dash");
             Dash();
         }
         
