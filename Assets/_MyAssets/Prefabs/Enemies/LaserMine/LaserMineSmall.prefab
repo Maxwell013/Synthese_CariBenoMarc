@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c97afbfdd19fa84dbfb6346b4730bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_hp: 1
+  m_hp: 4
   m_isInvincible: 0
   m_isLarge: 0
   m_lasers: {fileID: 1194813911632580877}
