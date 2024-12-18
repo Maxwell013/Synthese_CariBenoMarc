@@ -4843,7 +4843,7 @@ GameObject:
   - component: {fileID: 5089846409699019483}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5156,9 +5156,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hp: 1
-  m_isInvincable: 0
+  m_isInvincible: 0
   m_initalPosition: {x: 0, y: 0}
   m_speed: 400
+  m_angularSpeed: 200
+  m_dashSpeed: 1200
+  m_dashDuration: 0.2
   m_fireRate: 0.5
-  m_angularSpeed: 500
-  m_projectilePrefab: {fileID: 0}
+  m_dashRate: 0.5
+  m_burstFireCount: 36
+  m_projectilePrefab: {fileID: 3752644102587054386, guid: c5993aaee9682584a85a4693dfc50f44, type: 3}

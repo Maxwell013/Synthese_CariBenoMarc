@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3385046495936362645}
   m_Layer: 0
   m_Name: TmpRock
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hp: 0
-  m_isInvincable: 0
+  m_isInvincible: 0
 --- !u!58 &3385046495936362645
 CircleCollider2D:
   m_ObjectHideFlags: 0

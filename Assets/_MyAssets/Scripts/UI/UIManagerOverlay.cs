@@ -40,9 +40,5 @@ public class UIManagerOverlay : MonoBehaviour
        m_hpBar.fillAmount = p_hp / 3;
     }
 
-    Player player;
-    public void UpdateBurst()
-    {
-        // if (player.CanBurst()){ }
-    }
+
 }

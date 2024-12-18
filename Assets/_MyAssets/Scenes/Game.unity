@@ -331,7 +331,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 111336162212596450, guid: 3659e7ac2fcc8974b959a8fb56b832f3, type: 3}
       propertyPath: m_Name
-      value: TmpPlayer
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1299077757008942794, guid: 3659e7ac2fcc8974b959a8fb56b832f3, type: 3}
       propertyPath: m_RootOrder

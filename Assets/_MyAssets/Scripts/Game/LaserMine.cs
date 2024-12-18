@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Unity.Burst;
+using Unity.VisualScripting;
 
 public class LaserMine : Enemy
 {
@@ -58,9 +59,11 @@ public class LaserMine : Enemy
         Dammage();
     }
 
+    Player player;
     private void OnDestroy()
     {
-         Player.Instance.CanBurst();
+        Debug.Log("détruit)");
+        GameObject.Find("Player").GetComponent<Player>().CanBurst();
     }
 
 

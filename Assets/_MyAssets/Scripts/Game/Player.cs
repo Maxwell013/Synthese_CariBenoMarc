@@ -24,7 +24,6 @@ public class Player : Entity
     private bool m_isDashing = false;
     private bool m_canBurst = false;
 
-    public static Player Instance = default;
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
@@ -40,7 +39,7 @@ public class Player : Entity
     {
         if (Input.GetButton("Fire1") && Time.time > m_fireCooldown)
         {
-            if (m_canBurst) { Burst(); }
+            if (m_canBurst == true) { Burst(); }
             else { Fire(); }
         }
         if (Input.GetButton("Fire2") && Time.time > m_dashCooldown)
@@ -111,15 +110,11 @@ public class Player : Entity
         m_isDashing = false;
     }
 
-    public void CanBurst()
-    {
-        m_canBurst = true;
-    }
-
     private void Burst()
     {
         m_canBurst = false;
         m_fireCooldown = Time.time + m_fireRate;
+        Debug.Log("attaque");
 
         float gap = 360.0f / m_burstFireCount;
 
@@ -136,5 +131,12 @@ public class Player : Entity
     {
         transform.position = m_initalPosition;
         gameObject.SetActive(true);
+    }
+
+    // Set methods
+    public void CanBurst() 
+    {
+        Debug.Log("g/nocide");
+        m_canBurst = true; 
     }
 }

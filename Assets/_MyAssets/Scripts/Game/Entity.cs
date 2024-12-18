@@ -40,9 +40,13 @@ public class Entity : MonoBehaviour
 
     private void Kills()
     {
-        if (gameObject.CompareTag("Player") && gameObject.CompareTag("Enemy"))
+        if ((gameObject.CompareTag("Player") && gameObject.CompareTag("Enemy")) || (gameObject.CompareTag("Player") && gameObject.CompareTag("Mine")))
         {
             GameManager.Instance.AddKills();
+        }
+        if (gameObject.CompareTag("Player") && gameObject.CompareTag("Mine")) 
+        {
+            // Player.Instance.CanBurst();
         }
     }
     

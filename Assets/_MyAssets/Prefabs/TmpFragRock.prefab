@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5679587958366811022}
   m_Layer: 0
   m_Name: TmpFragRock
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hp: 1
-  m_isInvincable: 0
+  m_isInvincible: 0
   m_fragments:
   - {fileID: 5650014442056864289, guid: 855f9e344e3e06144ac9d534341ed6dd, type: 3}
   - {fileID: 5650014442056864289, guid: 855f9e344e3e06144ac9d534341ed6dd, type: 3}
