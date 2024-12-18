@@ -3,13 +3,11 @@ using UnityEngine;
 public class Enemy : Entity
 {
     private Rigidbody2D m_rb = default;
-    private float m_speed = default;
 
-    protected void Awake()
+    private void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        m_speed = GameManager.Instance.GetEnemySpeed();
-        m_rb.velocity = 2.0f * Vector2.left;
+        m_rb.velocity = GameObject.Find("Player").transform.position - transform.position;
     }
 
     private void FixedUpdate()
@@ -19,9 +17,7 @@ public class Enemy : Entity
 
     private void Movement()
     {
-        // Inital rotation is handeled by the enemy spawner
         Vector3 direction = m_rb.velocity.normalized;
-
-        m_rb.velocity = m_speed * Time.fixedDeltaTime * direction;
+        m_rb.velocity = GameManager.Instance.GetEnemySpeed() * Time.fixedDeltaTime * direction;
     }
 }

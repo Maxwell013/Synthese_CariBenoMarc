@@ -9,15 +9,19 @@ public class Player : Entity
     [SerializeField] private float m_angularSpeed = default;
     [SerializeField] private GameObject m_projectilePrefab = default;
 
+    [Header("Sound")]
+    [SerializeField] private AudioSource m_shootSound = default;
+
 
     private float m_fireCooldown = -1.0f; // Changer avec animation
     private bool m_enabled = false;
     private Rigidbody2D m_rb = default;
+    private Animator m_animator = default;
 
-
-    private void Awake()
+        private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
+        m_animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -25,6 +29,7 @@ public class Player : Entity
 
         if (Input.GetButton("Fire1") && Time.time > m_fireCooldown)
         {
+            m_shootSound.Play();
             Fire();
         }
 
@@ -55,6 +60,15 @@ public class Player : Entity
         Vector2 direction = new(positionX, positionY);
 
         m_rb.velocity = m_speed * Time.fixedDeltaTime * direction.normalized;
+
+        if(Mathf.Abs(m_rb.velocity.magnitude) >= 0.02f)
+        {
+            m_animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            m_animator.SetBool("isMoving", false);
+        }
     }
 
     private void Dash()
@@ -64,7 +78,6 @@ public class Player : Entity
 
     private void Rotation()
     {
-        // if (m_rb.velocity.magnitude >= 0.1)
         {
             Quaternion target = Quaternion.LookRotation(Vector3.forward, m_rb.velocity);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, m_angularSpeed * Time.fixedDeltaTime);

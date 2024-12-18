@@ -1,38 +1,44 @@
 using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 
 public class LaserMine : Enemy
 {
     [Header("LaserMine")]
-    [SerializeField] private List<GameObject> m_lasers = default; // List of laser groups
+    [SerializeField] private bool m_isLarge = default;
+    [SerializeField] private GameObject m_lasers = default;
     [SerializeField] private float m_laserRate = default;
     [SerializeField] private float m_laserDuration = default;
+    [SerializeField] private Sprite m_defaultSprite = default;
 
     private float m_laserCooldown;
 
     private const float m_maxX = 9.0f;
     private const float m_maxY = 5.0f;
 
-    new protected void Awake()
+    private Animator m_animator = default;
+
+    private void Awake()
     {
-        base.Awake();
+        m_animator = GetComponent<Animator>();
 
-        m_laserCooldown = Time.time + 1.5f * m_laserRate;
+        if (m_laserRate <= m_laserDuration + 1.3f)
+            Debug.Log("Warning laser rates will not work!");
 
-        foreach (GameObject group in m_lasers)
-            group.SetActive(false);
+        m_laserCooldown = Time.time + 0.1f; // + 0.5f * m_laserRate; tmp
+
+        m_lasers.SetActive(false);
 
         GetComponent<Rigidbody2D>().angularVelocity = 20.0f;
     }
 
-    private void Update()
+    new protected void Update()
     {
+        base.Update();
         float x = transform.position.x;
         float y = transform.position.y;
         if (Time.time > m_laserCooldown && MathF.Abs(x) <= m_maxX && MathF.Abs(y) <= m_maxY)
-            FireLasers();
+        FireLasers();
     }
 
     private void FireLasers()
@@ -43,12 +49,20 @@ public class LaserMine : Enemy
 
     private IEnumerator LaserCoroutine()
     {
-        int index = UnityEngine.Random.Range(0, m_lasers.Count);
+        m_animator.enabled = true;
 
-        m_lasers[index].gameObject.SetActive(true);
+        String animName = (m_isLarge) ? "LaserMineLarge_anim" : "LaserMineSmall_anim";
+        m_animator.Play(animName, -1, 0.0f);
+
+        yield return new WaitForSeconds(1.3f);
+
+        m_lasers.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(m_laserDuration);
 
-        m_lasers[index].gameObject.SetActive(false);
+        m_animator.enabled = false;
+        GetComponent<SpriteRenderer>().sprite = m_defaultSprite;
+
+        m_lasers.gameObject.SetActive(false);
     }
 }
