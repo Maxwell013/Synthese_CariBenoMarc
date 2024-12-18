@@ -53,12 +53,11 @@ public class GameManager : MonoBehaviour
         // Wait for animation end
         yield return new WaitForSeconds(1.0f);
 
-        m_player.SetActive(true);
         m_startAnimator.SetActive(false);
         animator.enabled = false;
 
         // Start player input
-        m_player.GetComponent<Player>().Enable();
+        m_player.GetComponent<Player>().Spawn();
         m_startTime = Time.time;
         m_points = 0;
 

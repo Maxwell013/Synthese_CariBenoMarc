@@ -116,7 +116,6 @@ public class Player : Entity
     {
         m_canBurst = false;
         m_fireCooldown = Time.time + m_fireRate;
-        Debug.Log("attaque");
 
         float gap = 360.0f / m_burstFireCount;
 

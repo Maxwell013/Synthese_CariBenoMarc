@@ -5160,14 +5160,14 @@ MonoBehaviour:
   m_isInvincible: 0
   m_initalPosition: {x: 0, y: 0}
   m_speed: 400
-  m_angularSpeed: 200
+  m_angularSpeed: 1200
   m_dashSpeed: 1200
   m_dashDuration: 0.2
   m_fireRate: 0.5
-  m_angularSpeed: 500
   m_dashRate: 0.5
   m_burstFireCount: 36
   m_projectilePrefab: {fileID: 3752644102587054386, guid: c5993aaee9682584a85a4693dfc50f44, type: 3}
+  m_shootSound: {fileID: 0}
 --- !u!95 &6456582616403461571
 Animator:
   serializedVersion: 5

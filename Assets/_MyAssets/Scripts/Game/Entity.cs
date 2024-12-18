@@ -8,8 +8,6 @@ public class Entity : MonoBehaviour
     [SerializeField] private int m_hp = 1;
     [SerializeField] private bool m_isInvincible = false;
 
-    private int m_kills = 0;
-
     private const float m_maxX = 12.0f;
     private const float m_maxY = 9.0f;
 
@@ -29,7 +27,6 @@ public class Entity : MonoBehaviour
             m_hp -= p_amount;
 
         if (m_hp <= 0)
-            Kills();
             Destroy(gameObject);
     }
 
