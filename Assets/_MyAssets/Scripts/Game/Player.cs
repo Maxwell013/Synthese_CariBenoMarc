@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Security;
 using UnityEngine;
 
 public class Player : Entity
@@ -101,13 +102,22 @@ public class Player : Entity
         }
     }
 
-    public IEnumerator DashCoroutine()
+    IEnumerator DashCoroutine()
     {
         m_isDashing = true;
 
         yield return new WaitForSeconds(m_dashDuration);
 
         m_isDashing = false;
+    }
+
+    IEnumerator IframeCoroutine()
+    {
+        m_isInvincible = true;
+        GetComponent<SpriteRenderer>().color = Color.gray;
+        yield return new WaitForSeconds(0.5f);
+        m_isInvincible = false;
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     private void Burst()
@@ -132,7 +142,11 @@ public class Player : Entity
         {
             // Burst();
             if (!m_isDashing)
+            {
                 Dammage(true);
+                GameObject.Find("Canvas").GetComponent<UIManagerOverlay>().UpdateHPBar();
+                StartCoroutine(IframeCoroutine());
+            }
         }
     }
 
