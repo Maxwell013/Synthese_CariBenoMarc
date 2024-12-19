@@ -1,8 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class Player : Entity
 {
@@ -30,6 +27,7 @@ public class Player : Entity
 
     private void Awake()
     {
+        GetComponent<SpriteRenderer>().enabled = false;
         m_rb = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
     }
@@ -128,11 +126,26 @@ public class Player : Entity
 
     }
 
+    private void OnCollisionEnter2D(Collision2D p_collision)
+    {
+        if (p_collision.gameObject.CompareTag("Enemy") || p_collision.gameObject.CompareTag("Mine"))
+        {
+            // Burst();
+            if (!m_isDashing)
+                Dammage(true);
+        }
+    }
+
+    override protected void Kill()
+    {
+        GameManager.Instance.EndGame();
+    }
+
     public void Spawn()
     {
-        m_enabled = true;
         transform.position = m_initalPosition;
-        gameObject.SetActive(true);
+        m_enabled = true;
+        GetComponent<SpriteRenderer>().enabled = true;
     }
 
     // Set methods

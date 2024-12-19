@@ -5156,7 +5156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f75b1980753cf3842b283f214b14bde0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_hp: 1
+  m_hp: 3
   m_isInvincible: 0
   m_initalPosition: {x: 0, y: 0}
   m_speed: 400

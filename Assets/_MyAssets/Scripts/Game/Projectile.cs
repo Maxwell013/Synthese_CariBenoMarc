@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Projectile : Entity
 {
@@ -43,4 +42,6 @@ public class Projectile : Entity
     {
         Destroy(gameObject);
     }
+
+    override protected void Kill() {} // Fix Compiler warnings
 }

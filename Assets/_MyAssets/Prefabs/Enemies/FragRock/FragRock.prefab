@@ -327,7 +327,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hp: 1
-  m_isInvincable: 0
+  m_isInvincible: 0
+  m_points: 10
   m_fragments:
   - {fileID: 8777749791406586001, guid: d670fd9414496b04f9454bbfab13b097, type: 3}
   - {fileID: 2791986272025841692, guid: e3e603444bb33d64ba22000efe0f4754, type: 3}

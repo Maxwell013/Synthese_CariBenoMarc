@@ -68,17 +68,9 @@ public class LaserMine : Enemy
         m_lasers.gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter2D(Collider2D p_collision)
+    override protected void Kill()
     {
-        Dammage();
-    }
-
-    Player player;
-    private void OnDestroy()
-    {
-        Debug.Log("détruit)");
+        base.Kill();
         GameObject.Find("Player").GetComponent<Player>().CanBurst();
     }
-
-
 }

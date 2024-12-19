@@ -324,4 +324,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hp: 2
-  m_isInvincable: 0
+  m_isInvincible: 0
+  m_points: 30

@@ -32,13 +32,11 @@ public class UIManagerOverlay : MonoBehaviour
 
     public void UpdatePoints(int p_score)
     {
-        m_pointsText.text = "Pointage : " + p_score.ToString();
+        // m_pointsText.text = "Pointage : " + p_score.ToString();
     }
 
     public void UpdateHPBar(int p_hp)
     {
-       m_hpBar.fillAmount = p_hp / 3;
+       // m_hpBar.fillAmount = p_hp / 3;
     }
-
-
 }
