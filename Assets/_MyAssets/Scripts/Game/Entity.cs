@@ -5,7 +5,7 @@ abstract public class Entity : MonoBehaviour
 {
     [Header("Entity")]
     [SerializeField] protected int m_hp = 1; // tmp
-    [SerializeField] private bool m_isInvincible = false;
+    [SerializeField] protected bool m_isInvincible = false;
 
     private const float m_maxX = 12.0f;
     private const float m_maxY = 9.0f;
@@ -31,6 +31,8 @@ abstract public class Entity : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public int GetHP() { return m_hp; }
 
     abstract protected void Kill();
 }

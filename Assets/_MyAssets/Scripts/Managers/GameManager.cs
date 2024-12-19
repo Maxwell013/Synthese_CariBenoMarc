@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [Header("Game settings")]
     [SerializeField] private float m_initalEnemySpeed = default;
     [SerializeField] private float m_enemySpeedScale = default;
+    [SerializeField] private GameObject m_BGMusic = default;
 
     private float m_startTime = default;
     private int m_points = default;
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             SceneManager.LoadScene("Start");
+            GameObject bgm = Instantiate(m_BGMusic, new Vector3(0.0f, 0.0f, -10.0f), Quaternion.identity);
+            bgm.GetComponent<AudioSource>().mute = m_isMuted;
         } else
         {
             Destroy(gameObject);
@@ -36,6 +39,8 @@ public class GameManager : MonoBehaviour
     IEnumerator StartGameCoroutine()
     {
         SceneManager.LoadScene("Game");
+        GameObject bgm = Instantiate(m_BGMusic, new Vector3(0.0f, 0.0f, -10.0f), Quaternion.identity);
+        bgm.GetComponent<AudioSource>().mute = m_isMuted;
 
         // Wait for scene to load
         yield return new WaitForSeconds(0.5f);
@@ -69,12 +74,22 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene("End");
+        GameObject bgm = Instantiate(m_BGMusic, new Vector3(0.0f, 0.0f, -10.0f), Quaternion.identity);
+        bgm.GetComponent<AudioSource>().mute = m_isMuted;
+    }
+
+    public void IncrementPoints(int p_amout) {
+        m_points += p_amout;
+        GameObject.Find("Canvas").GetComponent<UIManagerOverlay>().UpdatePoints();
+
     }
 
     // Set methods
-    public void SetMuted(bool p_state) { m_isMuted = p_state; }
-
-    public void IncrementPoints(int p_amout) { m_points += p_amout; }
+    public void SetMuted(bool p_state)
+    {
+        m_isMuted = p_state;
+        GameObject.Find("BGMusic").GetComponent<AudioSource>().mute = m_isMuted;
+    }
 
     // Get methods
     public bool IsMuted() { return m_isMuted; }
