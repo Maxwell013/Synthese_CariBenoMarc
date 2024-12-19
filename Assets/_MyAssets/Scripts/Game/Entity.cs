@@ -1,11 +1,10 @@
 using System;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
-public class Entity : MonoBehaviour
+abstract public class Entity : MonoBehaviour
 {
     [Header("Entity")]
-    [SerializeField] private int m_hp = 1;
+    [SerializeField] protected int m_hp = 1; // tmp
     [SerializeField] private bool m_isInvincible = false;
 
     private const float m_maxX = 12.0f;
@@ -18,25 +17,20 @@ public class Entity : MonoBehaviour
 
         if (MathF.Abs(x) >= m_maxX || MathF.Abs(y) >= m_maxY)
             Destroy(gameObject);
-
     }
 
-    public void Dammage(int p_amount = 1)
+    public void Dammage(bool p_sourceIsPlayer)
     {
         if (!m_isInvincible)
-            m_hp -= p_amount;
+            m_hp--;
 
         if (m_hp <= 0)
+        {
+            if (p_sourceIsPlayer)
+                Kill();
             Destroy(gameObject);
+        }
     }
 
-    private void OnDestroy()
-    {
-        // GameManager.Instance.DoSomething(); // increment point
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // TODO
-    }
+    abstract protected void Kill();
 }

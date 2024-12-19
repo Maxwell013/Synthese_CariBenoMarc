@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 4727240797115675770}
   m_Layer: 0
   m_Name: LaserMineLarge
-  m_TagString: Enemy
+  m_TagString: Mine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -489,6 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hp: 5
   m_isInvincible: 0
+  m_points: 100
   m_isLarge: 1
   m_lasers: {fileID: 1194813911632580877}
   m_laserRate: 9

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1016847212658550719}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hp: 1
-  m_isInvincible: 0
+  m_isInvincible: 1
   m_speed: 1000
   m_angularSpeed: 5000
 --- !u!95 &1016847212658550719

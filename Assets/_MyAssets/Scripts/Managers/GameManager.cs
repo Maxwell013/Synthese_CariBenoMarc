@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         m_player = GameObject.Find("Player");
-        m_startAnimator = GameObject.Find("StartAnimation");
+        m_startAnimator = GameObject.Find("Canvas/StartAnimation");
 
         Animator animator = m_startAnimator.GetComponent<Animator>();
 
@@ -61,16 +62,20 @@ public class GameManager : MonoBehaviour
         m_startTime = Time.time;
         m_points = 0;
 
+        GameObject.Find("SpawnManager").GetComponent<SpawnManager>().StartSpawning();
+
         yield return null;
     }
 
     public void EndGame()
     {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("End"));
+        SceneManager.LoadScene("End");
     }
 
     // Set methods
     public void SetMuted(bool p_state) { m_isMuted = p_state; }
+
+    public void IncrementPoints(int p_amout) { m_points += p_amout; }
 
     // Get methods
     public bool IsMuted() { return m_isMuted; }

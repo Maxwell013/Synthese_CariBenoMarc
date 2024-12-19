@@ -6,13 +6,10 @@ public class FragRock : Enemy
     [Header("Frag Rock")]
     [SerializeField] private List<GameObject> m_fragments = default;
 
-    private void OnTriggerEnter2D(Collider2D p_collision)
+    override protected void Kill()
     {
-        Dammage();
-    }
+        base.Kill();
 
-    private void OnDestroy()
-    {
         Quaternion r = transform.rotation;
 
         Instantiate(m_fragments[0], transform.position + r * new Vector3(-0.5f, -0.5f, 0.0f), r);

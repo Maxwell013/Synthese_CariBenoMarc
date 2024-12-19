@@ -1,8 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class Player : Entity
 {
@@ -126,6 +123,20 @@ public class Player : Entity
             Instantiate(m_projectilePrefab, transform.position + rotation * Vector2.up, rotation);
         }
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D p_collision)
+    {
+        if (p_collision.gameObject.CompareTag("Enemy") || p_collision.gameObject.CompareTag("Mine"))
+        {
+            // Burst();
+            Dammage(true);
+        }
+    }
+
+    override protected void Kill()
+    {
+        GameManager.Instance.EndGame();
     }
 
     public void Spawn()
