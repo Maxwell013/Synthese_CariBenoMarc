@@ -8,11 +8,11 @@ public class GameManager : MonoBehaviour
     [Header("Game settings")]
     [SerializeField] private float m_initalEnemySpeed = default;
     [SerializeField] private float m_enemySpeedScale = default;
-    [SerializeField] private GameObject m_BGMusic = default;
 
     private float m_startTime = default;
     private int m_points = default;
     private bool m_isMuted = false;
+    private float m_finalScore = default;
 
     private GameObject m_startAnimator = default;
     private GameObject m_player = default;
@@ -25,9 +25,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.LoadScene("Start");
-            GameObject bgm = Instantiate(m_BGMusic, new Vector3(0.0f, 0.0f, -10.0f), Quaternion.identity);
-            bgm.GetComponent<AudioSource>().mute = m_isMuted;
+            MainMenu();
         } else
         {
             Destroy(gameObject);
@@ -39,7 +37,7 @@ public class GameManager : MonoBehaviour
     IEnumerator StartGameCoroutine()
     {
         SceneManager.LoadScene("Game");
-        GameObject bgm = Instantiate(m_BGMusic, new Vector3(0.0f, 0.0f, -10.0f), Quaternion.identity);
+        GameObject bgm = GameObject.Find("BGMusic");
         bgm.GetComponent<AudioSource>().mute = m_isMuted;
 
         // Wait for scene to load
@@ -73,8 +71,9 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        m_finalScore = GetTime() + GetPoints();
         SceneManager.LoadScene("End");
-        GameObject bgm = Instantiate(m_BGMusic, new Vector3(0.0f, 0.0f, -10.0f), Quaternion.identity);
+        GameObject bgm = GameObject.Find("BGMusic");
         bgm.GetComponent<AudioSource>().mute = m_isMuted;
     }
 
@@ -91,6 +90,13 @@ public class GameManager : MonoBehaviour
         GameObject.Find("BGMusic").GetComponent<AudioSource>().mute = m_isMuted;
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Start");
+        GameObject bgm = GameObject.Find("BGMusic");
+        bgm.GetComponent<AudioSource>().mute = m_isMuted;
+    }
+
     // Get methods
     public bool IsMuted() { return m_isMuted; }
 
@@ -100,5 +106,5 @@ public class GameManager : MonoBehaviour
 
     public float GetEnemySpeed() { return m_initalEnemySpeed + m_enemySpeedScale * GetTime(); }
 
-    public float GetFinalScore() { return GetTime() + GetPoints(); }
+    public float GetFinalScore() { return m_finalScore; }
 }

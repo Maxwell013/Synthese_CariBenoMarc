@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,7 @@ public class ReadButton : MonoBehaviour
     {
         if (m_highScoreTable != null)
         {
-            // m_highScoreTable.AjouterLettre(this.GetComponentInChildren<TMP_Text>().text);
+            m_highScoreTable.AjouterLettre(this.GetComponentInChildren<TMP_Text>().text);
         }
     }
 }

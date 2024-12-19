@@ -84,6 +84,8 @@ public class Player : Entity
         }
         m_rb.velocity = speed * Time.fixedDeltaTime * direction.normalized;
         m_animator.SetBool("isMoving", m_rb.velocity.sqrMagnitude > 0.01f);
+
+        m_rb.position = new Vector2(Mathf.Clamp(m_rb.position.x, -8.5f, 8.5f), Mathf.Clamp(m_rb.position.y, -4.5f, 4.5f));
     }
 
     private void Dash()

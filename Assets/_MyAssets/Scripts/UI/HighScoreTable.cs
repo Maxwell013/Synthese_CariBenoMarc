@@ -50,40 +50,8 @@ public class HighScoreTable : MonoBehaviour
 
         //Vérifie si on est sur la scène de fin afin de gérer si on ajoute ou non les score obtenu
         //à la liste des meilleurs scores
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-        {
-            //Si il n'y pas pas déjà 10 scores enregistré on saisie le nom et le score
-            //Sinon on passe à la vérification suivante
-            if (highScores._highScoreEntryList.Count >= 10)
-            {
-                // Si le score obtenu est plus haut que le 10e score de la liste on saisie le nom et score
-                // Sinon on affiche pas le panneau de saisie
-                if (PlayerPrefs.GetInt("Score") > highScores._highScoreEntryList[9].score)
-                {
-                    AffichePanneaudeSaisieNom();
-                }
-                else
-                {
-                    //S'assurer de sélection le bouton de retour sur le panneau principal
-                    EventSystem.current.SetSelectedGameObject(null);
-                    EventSystem.current.SetSelectedGameObject(_RetourDepart);
-                }
-            }
-            else
-            {
-                AffichePanneaudeSaisieNom();
-            }
-        }
-    }
-
-    private void Start()
-    {
-        // Sécurité si je suis sur la scène de fin du jeu après un certain délai
-        // On retourne au menu d'accueil du jeu
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-        {
-            StartCoroutine(RetourDebut());
-        }
+        if (highScores._highScoreEntryList.Count < 10 || GameManager.Instance.GetFinalScore() > highScores._highScoreEntryList[9].score)
+           AffichePanneaudeSaisieNom();
     }
 
     private void AffichePanneaudeSaisieNom()
@@ -138,19 +106,6 @@ public class HighScoreTable : MonoBehaviour
         //Cache la ligne template qui sert seulement de repère visuel
         _entryTemplate.gameObject.SetActive(false);
 
-        // Utilise seulement pour les tests on enlève les commentaires pour générer
-        // manuellement 10 entrées dans la table des highscores
-        AddHighScoreEntry(14500, "Dave");
-        AddHighScoreEntry(3400, "Alex");
-        AddHighScoreEntry(700, "Josée");
-        AddHighScoreEntry(5500, "Maxime");
-        AddHighScoreEntry(7800, "David");
-        AddHighScoreEntry(1800, "Shany");
-        AddHighScoreEntry(100, "François");
-        AddHighScoreEntry(2800, "Fabrice");
-        AddHighScoreEntry(5400, "Jonathan");
-        AddHighScoreEntry(5400, "Line");
-
         // Récupère la liste des highscores dans une liste à partir du PlayerPrefs
         // Cette liste est stocké à l'aide de JSON sous forme de chaine de caractère
         string jsonString = PlayerPrefs.GetString("highScoreTable");
@@ -162,7 +117,7 @@ public class HighScoreTable : MonoBehaviour
         //On ajoute l'entrée CEGEPTR avec un pointage de 100 comme première entrée
         if (highScores == null)
         {
-            AddHighScoreEntry(100, "CEGEPTR");
+            AddHighScoreEntry(1.0f, "CEGEPTR");
         }
 
         // Après avoir récupéré la liste on trie(ordonner la liste des highscores)
@@ -225,8 +180,8 @@ public class HighScoreTable : MonoBehaviour
         entryTransform.Find("TxtPos").GetComponent<Text>().text = rankString;
 
         //Change le texte pour le pointage
-        int score = highScoreEntry.score;
-        entryTransform.Find("TxtScore").GetComponent<Text>().text = score.ToString();
+        float score = highScoreEntry.score;
+        entryTransform.Find("TxtScore").GetComponent<Text>().text = score.ToString("f2");
 
         //Change le texte pour le nom
         string name = highScoreEntry.name;
@@ -278,7 +233,7 @@ public class HighScoreTable : MonoBehaviour
         if (!string.IsNullOrEmpty(saisie) && valide)
         {
             // Méthode qui ajoute le score obtenu et le nom saisie à la liste des HighScores
-            AddHighScoreEntry(PlayerPrefs.GetInt("Score"), saisie);
+            AddHighScoreEntry(GameManager.Instance.GetFinalScore(), saisie);
             _panneauSaisieNom.SetActive(false);  // Cache le panneau de saisie
             _panneauPrincipal.SetActive(true);  // Affiche le panneau principal
             // S'assure que le bouton retour soit sélectionne sur le panneau principal
@@ -305,7 +260,7 @@ public class HighScoreTable : MonoBehaviour
     }
 
     // Méthode qui ajoute le nom saisie et le score à la liste des HighScores
-    public void AddHighScoreEntry(int p_score, string p_name)
+    public void AddHighScoreEntry(float p_score, string p_name)
     {
         //Creer un nouvel objet HighScore Entry à partir du score et nom recu
         HighScoreEntry highScoreEntry = new HighScoreEntry { score = p_score, name = p_name };
@@ -485,7 +440,7 @@ public class HighScoreTable : MonoBehaviour
     [System.Serializable]
     private class HighScoreEntry
     {
-        public int score;
+        public float score;
         public string name;
     }
 }

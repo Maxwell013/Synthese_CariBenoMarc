@@ -30,7 +30,6 @@ public class UIManagerMenu : MonoBehaviour
     [Header("End Menu")]
     [SerializeField] private GameObject m_mainMenuButton = default;
     [SerializeField] private TextMeshProUGUI m_finalScoreText = default;
-    [SerializeField] private TextMeshProUGUI m_highScoreText = default;
 
     private Image m_muteImage = default;
 
@@ -104,29 +103,8 @@ public class UIManagerMenu : MonoBehaviour
         {
             ResetButton(m_mainMenuButton);
 
-            float finalScore = GameManager.Instance.GetFinalScore();
-
-            m_finalScoreText.text = "Votre score : "  + finalScore.ToString();
+            m_finalScoreText.text = "Votre score : "  + GameManager.Instance.GetFinalScore().ToString("f2");
             SetSelectedButton(m_mainMenuButton);
-
-            if (PlayerPrefs.HasKey("HighScore"))
-            {
-                float highScore = PlayerPrefs.GetFloat("HighScore");
-
-                if (highScore >= finalScore)
-                {
-                    m_highScoreText.text = "Meilleur score : " + PlayerPrefs.GetFloat("HighScore").ToString();
-                } else
-                {
-                    m_highScoreText.text = "Meilleur score : " + finalScore.ToString();
-                    PlayerPrefs.SetFloat("HighScore", finalScore);
-                }
-            }
-            else
-            {
-                m_highScoreText.text = "Meilleur score : " + finalScore.ToString();
-                PlayerPrefs.SetFloat("HighScore", finalScore);
-            }
         }
 
     }
@@ -226,6 +204,6 @@ public class UIManagerMenu : MonoBehaviour
 
     public void OnMainMenuClick()
     {
-        GameManager.Instance.idk;
+        GameManager.Instance.MainMenu();
     }
 }

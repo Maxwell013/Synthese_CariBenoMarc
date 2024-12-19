@@ -34,8 +34,8 @@ public class UIManagerOverlay : MonoBehaviour
     private void Update()
     {
         m_timerText.text = "Temps : " + GameManager.Instance.GetTime().ToString("f2") + "s" ;
-        if (Input.GetButton("Jump"))
-            GameManager.Instance.SetMuted(!GameManager.Instance.IsMuted())
+        if (Input.GetButtonDown("Jump"))
+            GameManager.Instance.SetMuted(!GameManager.Instance.IsMuted());
     }
 
     public void UpdatePoints()
