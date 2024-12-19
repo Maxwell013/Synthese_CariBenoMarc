@@ -10,16 +10,12 @@ public class UIManagerOverlay : MonoBehaviour
     [SerializeField] private TMP_Text m_pointsText = default;
     [SerializeField] private TMP_Text m_timerText = default;
     [SerializeField] private Image m_hpBar = default;
-    [SerializeField] private Sprite m_muteActiveSprite = default;
-    [SerializeField] private Sprite m_muteInactiveSprite = default;
     
 
     private int m_hpBarWidth = default;
     private RectTransform m_hpBarRt = default;
 
-
     public static UIManagerOverlay Instance;
-    private Image m_muteImage = default;
 
     private void Awake()
     {
@@ -39,18 +35,7 @@ public class UIManagerOverlay : MonoBehaviour
     {
         m_timerText.text = "Temps : " + GameManager.Instance.GetTime().ToString("f2") + "s" ;
         if (Input.GetButton("Jump"))
-        {
-            if (GameManager.Instance.IsMuted())
-            {
-                m_muteImage.sprite = m_muteInactiveSprite;
-                GameManager.Instance.SetMuted(false);
-            }
-            else
-            {
-                m_muteImage.sprite = m_muteActiveSprite;
-                GameManager.Instance.SetMuted(true);
-            }
-        }
+            GameManager.Instance.SetMuted(!GameManager.Instance.IsMuted())
     }
 
     public void UpdatePoints()

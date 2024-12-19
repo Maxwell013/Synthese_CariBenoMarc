@@ -99,4 +99,6 @@ public class GameManager : MonoBehaviour
     public int GetPoints() { return m_points; }
 
     public float GetEnemySpeed() { return m_initalEnemySpeed + m_enemySpeedScale * GetTime(); }
+
+    public float GetFinalScore() { return GetTime() + GetPoints(); }
 }

@@ -25,12 +25,12 @@ public class UIManagerMenu : MonoBehaviour
     [SerializeField] private GameObject m_infoPanel = default;
 
     [SerializeField] private GameObject m_bestScoresPanel = default;
-    [SerializeField] private TMP_Text m_gamesPlayeddText = default;
+    [SerializeField] private TMP_Text m_gamesPlayedText = default;
 
     [Header("End Menu")]
-
+    [SerializeField] private GameObject m_mainMenuButton = default;
     [SerializeField] private TextMeshProUGUI m_finalScoreText = default;
-    [SerializeField] private Button m_mainMenuButton = default;
+    [SerializeField] private TextMeshProUGUI m_highScoreText = default;
 
     private Image m_muteImage = default;
 
@@ -48,7 +48,7 @@ public class UIManagerMenu : MonoBehaviour
 
         } else if (m_type == MenuType.EndMenu)
         {
-            //todo 
+            AddListener(m_mainMenuButton, OnMainMenuClick);
         }
 
     }
@@ -80,7 +80,7 @@ public class UIManagerMenu : MonoBehaviour
 
     private void Start()
     {
-        m_muteImage.sprite = m_muteInactiveSprite;
+        m_muteImage.sprite = GameManager.Instance.IsMuted() ? m_muteActiveSprite : m_muteInactiveSprite;
         ResetButton(m_quitButton);
 
         if (m_type == MenuType.MainMenu)
@@ -92,20 +92,41 @@ public class UIManagerMenu : MonoBehaviour
 
             if (PlayerPrefs.HasKey("GamesPlayed"))
             {
-                m_gamesPlayeddText.text = "Nombres de parties : " + PlayerPrefs.GetInt("GamesPlayed").ToString();
+                m_gamesPlayedText.text = "Parties jouées : " + PlayerPrefs.GetInt("GamesPlayed").ToString();
             }
             else
             {
-                m_gamesPlayeddText.text = "Nombres de parties : 0";
+                m_gamesPlayedText.text = "Parties jouées : 0";
             }
         }
 
         if (m_type == MenuType.EndMenu)
         {
-            m_mainMenuButton.onClick.AddListener(OnMainMenuClick);
-            m_finalScoreText.text = "Votre pointage : "; //  + GameManager.Instance.Score.ToString();
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(m_mainMenuButton.gameObject);
+            ResetButton(m_mainMenuButton);
+
+            float finalScore = GameManager.Instance.GetFinalScore();
+
+            m_finalScoreText.text = "Votre score : "  + finalScore.ToString();
+            SetSelectedButton(m_mainMenuButton);
+
+            if (PlayerPrefs.HasKey("HighScore"))
+            {
+                float highScore = PlayerPrefs.GetFloat("HighScore");
+
+                if (highScore >= finalScore)
+                {
+                    m_highScoreText.text = "Meilleur score : " + PlayerPrefs.GetFloat("HighScore").ToString();
+                } else
+                {
+                    m_highScoreText.text = "Meilleur score : " + finalScore.ToString();
+                    PlayerPrefs.SetFloat("HighScore", finalScore);
+                }
+            }
+            else
+            {
+                m_highScoreText.text = "Meilleur score : " + finalScore.ToString();
+                PlayerPrefs.SetFloat("HighScore", finalScore);
+            }
         }
 
     }
@@ -205,6 +226,6 @@ public class UIManagerMenu : MonoBehaviour
 
     public void OnMainMenuClick()
     {
-        // GameManager.Instance.idk;
+        GameManager.Instance.idk;
     }
 }
