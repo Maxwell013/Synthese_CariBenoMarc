@@ -27,8 +27,8 @@ public class UIManagerOverlay : MonoBehaviour
 
     private void Update()
     {
-        m_timerText.text = "Temps : "; // + GameManager.Instance.getTime();
-    }
+        m_timerText.text = "Temps : " + GameManager.Instance.GetTime().ToString("f2") + "s" ;
+    } 
 
     public void UpdatePoints(int p_score)
     {
