@@ -38,30 +38,29 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Game");
 
         // Wait for scene to load
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
 
-        m_player = GameObject.Find("Player");
+        m_player = GameObject.FindWithTag("Player");
         m_startAnimator = GameObject.Find("Canvas/StartAnimation");
 
         Animator animator = m_startAnimator.GetComponent<Animator>();
 
-        m_player.SetActive(false);
         m_startAnimator.SetActive(true);
 
         animator.enabled = true;
         animator.Play("Start_anim");
 
         // Wait for animation end
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.2f);
 
-        m_startAnimator.SetActive(false);
-        animator.enabled = false;
+        m_player.GetComponent<Player>().Spawn();
 
         // Start player input
-        m_player.GetComponent<Player>().Spawn();
+        m_startAnimator.SetActive(false);
         m_startTime = Time.time;
         m_points = 0;
 
+        animator.enabled = false;
         GameObject.Find("SpawnManager").GetComponent<SpawnManager>().StartSpawning();
 
         yield return null;

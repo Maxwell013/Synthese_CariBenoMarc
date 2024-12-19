@@ -39,6 +39,4 @@ public class UIManagerOverlay : MonoBehaviour
     {
        // m_hpBar.fillAmount = p_hp / 3;
     }
-
-
 }

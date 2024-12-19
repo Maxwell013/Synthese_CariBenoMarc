@@ -27,6 +27,7 @@ public class Player : Entity
 
     private void Awake()
     {
+        GetComponent<SpriteRenderer>().enabled = false;
         m_rb = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
     }
@@ -130,7 +131,8 @@ public class Player : Entity
         if (p_collision.gameObject.CompareTag("Enemy") || p_collision.gameObject.CompareTag("Mine"))
         {
             // Burst();
-            Dammage(true);
+            if (!m_isDashing)
+                Dammage(true);
         }
     }
 
@@ -141,9 +143,9 @@ public class Player : Entity
 
     public void Spawn()
     {
-        m_enabled = true;
         transform.position = m_initalPosition;
-        gameObject.SetActive(true);
+        m_enabled = true;
+        GetComponent<SpriteRenderer>().enabled = true;
     }
 
     // Set methods
